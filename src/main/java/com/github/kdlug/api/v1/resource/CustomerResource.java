@@ -1,7 +1,9 @@
 package com.github.kdlug.api.v1.resource;
 
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.core.Relation;
 
+@Relation(value = "customer", collectionRelation = "customers")
 public class CustomerResource extends ResourceSupport {
     private String name;
     private String lastname;

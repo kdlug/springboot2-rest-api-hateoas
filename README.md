@@ -55,10 +55,21 @@ Resource list
 }
 ```
 
+## Changing Relation name
+
+_embedded field name `customerResourceList` is auto-generated. We can change it using `@Relation` annotation.
+
+```java
+@Relation(value = "customer", collectionRelation = "customers")
+public class CustomerResource extends ResourceSupport {
+    ...
+}
+```
+
 ## TODO
 
-- Change `_embedded` field name from `customerResourceList` to `customers`
-- Move creating self link for customers list outside controller
-- Add pagination
-- Add sorting/filtering
-- Try with more embedded resources
+- [x] Change `_embedded` field name from `customerResourceList` to `customers`
+- [ ] Move creating self link for customers list outside controller
+- [ ] Add pagination
+- [ ] Add sorting/filtering
+- [ ] Try with more embedded resources
