@@ -9,6 +9,10 @@ public class CustomerResource extends ResourceSupport {
     private String lastname;
     private String email;
 
+    public String getFullName() {
+        return name + " " + lastname;
+    }
+
     public String getName() {
         return name;
     }
