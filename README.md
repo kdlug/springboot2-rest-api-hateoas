@@ -1,10 +1,41 @@
 # HATEOAS
 
+## Rest api representation
+
+Single resource
+
+```json
+{
+  "name": "Joe",
+  "lastname": "Nonamassa",
+  "email": "joe.bonamassa@gmail.com",
+}
+```
+
+Resource list
+
+```json
+{
+  "customers": [
+      {
+        "name": "Joe",
+        "lastname": "Bonamassa",
+        "email": "joe.bonamassa@gmail.com"
+      },
+      {
+        "name": "Joe",
+        "lastname": "Bonamassa",
+        "email": "joe.bonamassa@gmail.com"
+      }
+  ]
+}
+```
+
 ## HAL representation
 
 HAL representation contains hypermedia links.
 
-giSingle resource
+Single resource
 
 ```json
 {
@@ -54,6 +85,49 @@ Resource list
   }
 }
 ```
+
+## Resource
+
+Resource class is a DAO class which extends ResourceSupport class. ResourceSupport adds `_links` to a resource.
+
+```
+public class CustomerResource extends ResourceSupport {
+    private String name;
+    private String lastname;
+    private String email;
+
+    public String getFullName() {
+        return name + " " + lastname;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getLastname() {
+        return lastname;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+}
+```
+
+It's important that getter method names determines names of fields in json output. F.ex. field `fullName` does not exist in CustomerResource, but it's rendered in json output, because there is a getter called `getFullName()`.
+
 
 ## Changing Relation name
 
@@ -115,7 +189,6 @@ public class CustomerResource {
     }
 }
 ```
-
 
 
 ## TODO
