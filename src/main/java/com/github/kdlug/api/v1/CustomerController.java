@@ -32,17 +32,21 @@ public class CustomerController {
     public Resources getCustomers() {
         List<Customer> customers = service.getCustomers();
 
-        Link selfRel = linkTo(methodOn(this.getClass()
-        )
+        Link self = linkTo(methodOn(this.getClass())
                 .getCustomers()).withSelfRel();
 
-        return new Resources<>(assembler.toResources(customers), selfRel);
+        return new Resources<>(assembler.toResources(customers), self);
     }
 
     @GetMapping("/{customerId}")
     public CustomerResource getCustomerById(@PathVariable long customerId) {
         Customer customer = service.getCustomer(customerId);
 
-        return assembler.toResource(customer);
+        Link customers = linkTo(methodOn(this.getClass()).getCustomers()).withRel("customers");
+
+        CustomerResource resource = assembler.toResource(customer);
+        resource.add(customers);
+
+        return resource;
     }
 }
