@@ -32,7 +32,8 @@ public class CustomerController {
     public Resources getCustomers() {
         List<Customer> customers = service.getCustomers();
 
-        Link selfRel = linkTo(methodOn(CustomerController.class)
+        Link selfRel = linkTo(methodOn(this.getClass()
+        )
                 .getCustomers()).withSelfRel();
 
         return new Resources<>(assembler.toResources(customers), selfRel);
