@@ -1,5 +1,6 @@
 package com.github.kdlug.api.v1.resource;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import com.github.kdlug.entity.Note;
 import org.springframework.hateoas.ResourceSupport;
@@ -11,6 +12,7 @@ import org.springframework.hateoas.core.Relation;
 import java.util.ArrayList;
 import java.util.List;
 
+//@JsonPropertyOrder({ "name", "lastname", "full_name", "email", "notes" })
 @Relation(value = "customer", collectionRelation = "customers")
 public class CustomerResource extends ResourceSupport {
     private String name;

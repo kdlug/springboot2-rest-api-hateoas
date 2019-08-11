@@ -259,6 +259,32 @@ public class CustomerResource {
 }
 ```
 
+## Sorting JSON response fields
+
+We can specify fields order for given object using field names:
+```java
+@JsonPropertyOrder({ "id", "name" })
+```
+ or in alphabetic order
+ 
+ ```java
+ @JsonPropertyOrder(alphabetic=true)
+```
+
+There is an easier way in Spring Boot by specifying a property (in application.properties) for example:
+```
+spring.jackson.mapper.sort_properties_alphabetically=true
+```
+
+
+
+```java
+@JsonPropertyOrder({ "name", "lastname", "full_name", "email", "notes" })
+@Relation(value = "customer", collectionRelation = "customers")
+public class CustomerResource extends ResourceSupport {
+...
+}
+```
 
 ## TODO
 
