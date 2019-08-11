@@ -1,13 +1,28 @@
 package com.github.kdlug.api.v1.resource;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import com.github.kdlug.entity.Note;
 import org.springframework.hateoas.ResourceSupport;
+import org.springframework.hateoas.Resources;
+import org.springframework.hateoas.core.EmbeddedWrapper;
+import org.springframework.hateoas.core.EmbeddedWrappers;
 import org.springframework.hateoas.core.Relation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Relation(value = "customer", collectionRelation = "customers")
 public class CustomerResource extends ResourceSupport {
     private String name;
     private String lastname;
     private String email;
+    @JsonUnwrapped
+    private Resources<EmbeddedWrapper> embedded;
+
+    public CustomerResource embedNotes(Resources<EmbeddedWrapper> notes) {
+        embedded = notes;
+        return this;
+    }
 
     public String getFullName() {
         return name + " " + lastname;

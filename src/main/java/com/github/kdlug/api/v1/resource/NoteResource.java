@@ -1,5 +1,6 @@
 package com.github.kdlug.api.v1.resource;
 
+import com.github.kdlug.entity.Note;
 import org.springframework.hateoas.ResourceSupport;
 import org.springframework.hateoas.core.Relation;
 
@@ -10,6 +11,12 @@ public class NoteResource extends ResourceSupport {
     private Long customerId;
     private Date createdAt;
     private String note;
+//
+//    public NoteResource(Note note) {
+//        this.customerId = note.getCustomerId();
+//        this.createdAt = note.getCreatedAt();
+//        this.note = note.getNote();
+//    }
 
     public Long getCustomerId() {
         return customerId;

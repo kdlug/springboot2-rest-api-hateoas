@@ -9,11 +9,10 @@ import com.github.kdlug.service.CustomerService;
 import com.github.kdlug.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Resource;
 import org.springframework.hateoas.Resources;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.hateoas.core.EmbeddedWrapper;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -46,13 +45,22 @@ public class CustomerController {
     }
 
     @GetMapping("/{customerId}")
-    public CustomerResource getCustomerById(@PathVariable long customerId) {
+    public CustomerResource getCustomerById(@PathVariable long customerId, @RequestParam(value = "embedded", required = false) String embedded) {
         Customer customer = customerService.getCustomer(customerId);
 
         Link customers = linkTo(methodOn(this.getClass()).getCustomers()).withRel("customers");
 
         CustomerResource resource = customerResourceAssembler.toResource(customer);
         resource.add(customers);
+
+
+        if ("notes".equals(embedded)) {
+            List<Note> notes = noteService.getNotes(customerId);
+            Resources<EmbeddedWrapper> noteResources = new Resources(noteResourceAssembler.toResources(notes));
+
+            resource.embedNotes(noteResources);
+        }
+
 
         return resource;
     }

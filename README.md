@@ -1,5 +1,7 @@
 # HATEOAS
 
+HATEOAS (Hypermedia as the Engine of Application State) is a constraint of the REST application architecture. A hypermedia driven REST API provides information to help to navigate through the API dynamically. This is done by passing hypermedia links with the responses.HATEOAS is a fundamental concept to create Discoverable REST APIs.
+
 ## Rest api representation
 
 Single resource
@@ -86,9 +88,18 @@ Resource list
 }
 ```
 
+## Dependency
+
+```groovy
+dependencies {
+	implementation("org.springframework.boot:spring-boot-starter-hateoas")
+
+}
+```
+
 ## Resource
 
-Resource class is a DAO class which extends ResourceSupport class. ResourceSupport adds `_links` to a resource.
+Resource class is a DAO class which extends base class `ResourceSupport` class available as part of the Spring support for HATEOAS. It allows us to add instances of Link that is useful while creating the `_links` element.
 
 ```
 public class CustomerResource extends ResourceSupport {
@@ -125,7 +136,7 @@ public class CustomerResource extends ResourceSupport {
     }
 }
 ```
-
+The ResourceSupport class provides add() method for link building. 
 It's important that getter method names determines names of fields in json output. F.ex. field `fullName` does not exist in CustomerResource, but it's rendered in json output, because there is a getter called `getFullName()`.
 
 
@@ -140,6 +151,64 @@ public class CustomerResource extends ResourceSupport {
 }
 ```
 
+## Embedding 
+
+Single CustomerResource with embedded notes under link: `/api/v1/customers/1?embedded=notes`
+
+```json
+{
+    "name": "Joe",
+    "lastname": "Bonamassa",
+    "email": "joe.bonamassa@gmail.com",
+    "_embedded": {
+        "notes": [
+            {
+                "customer_id": 1,
+                "created_at": "2019-08-11T11:58:28.008+0000",
+                "note": "Note 1",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/v1/notes/1"
+                    }
+                }
+            },
+            {
+                "customer_id": 1,
+                "created_at": "2019-08-11T11:58:28.008+0000",
+                "note": "Note 2",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/v1/notes/2"
+                    }
+                }
+            },
+            {
+                "customer_id": 1,
+                "created_at": "2019-08-11T11:58:28.008+0000",
+                "note": "Note 3",
+                "_links": {
+                    "self": {
+                        "href": "http://localhost:8080/api/v1/notes/3"
+                    }
+                }
+            }
+        ]
+    },
+    "full_name": "Joe Bonamassa",
+    "_links": {
+        "self": {
+            "href": "http://localhost:8080/api/v1/customers/1"
+        },
+        "customer_notes": {
+            "href": "http://localhost:8080/api/v1/customers/1/notes"
+        },
+        "customers": {
+            "href": "http://localhost:8080/api/v1/customers"
+        }
+    }
+}
+
+```
 ## Naming strategy
 
 We can either configure the whole application to expect the snake case input by adding below line in application.properties
