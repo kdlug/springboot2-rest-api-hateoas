@@ -17,11 +17,10 @@ public class CustomerResource extends ResourceSupport {
     private String lastname;
     private String email;
     @JsonUnwrapped
-    private Resources<EmbeddedWrapper> embedded;
+    private Resources<NoteResource> notes;
 
-    public CustomerResource embedNotes(Resources<EmbeddedWrapper> notes) {
-        embedded = notes;
-        return this;
+    public void embedNotes(Resources<NoteResource> notes) {
+        this.notes = notes;
     }
 
     public String getFullName() {

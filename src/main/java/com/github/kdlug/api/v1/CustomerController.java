@@ -2,6 +2,7 @@ package com.github.kdlug.api.v1;
 
 import com.github.kdlug.api.v1.resource.CustomerResource;
 import com.github.kdlug.api.v1.resource.CustomerResourceAssembler;
+import com.github.kdlug.api.v1.resource.NoteResource;
 import com.github.kdlug.api.v1.resource.NoteResourceAssembler;
 import com.github.kdlug.entity.Customer;
 import com.github.kdlug.entity.Note;
@@ -53,10 +54,9 @@ public class CustomerController {
         CustomerResource resource = customerResourceAssembler.toResource(customer);
         resource.add(customers);
 
-
         if ("notes".equals(embedded)) {
             List<Note> notes = noteService.getNotes(customerId);
-            Resources<EmbeddedWrapper> noteResources = new Resources(noteResourceAssembler.toResources(notes));
+            Resources<NoteResource> noteResources = new Resources(noteResourceAssembler.toResources(notes));
 
             resource.embedNotes(noteResources);
         }

@@ -11,12 +11,6 @@ public class NoteResource extends ResourceSupport {
     private Long customerId;
     private Date createdAt;
     private String note;
-//
-//    public NoteResource(Note note) {
-//        this.customerId = note.getCustomerId();
-//        this.createdAt = note.getCreatedAt();
-//        this.note = note.getNote();
-//    }
 
     public Long getCustomerId() {
         return customerId;
